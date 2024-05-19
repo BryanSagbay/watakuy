@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../service/auth.service';
 import { Locales } from '../../model/Locales';
 import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-locales',
   standalone: true,
   imports: [CommonModule, FormsModule,ReactiveFormsModule,RouterModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  templateUrl: './locales.component.html',
+  styleUrl: './locales.component.css'
 })
-export class DashboardComponent implements OnInit {
+export class LocalesComponent implements OnInit {
   localForm!: FormGroup;
   local: Locales | undefined;
 
