@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 import { Locales } from '../../model/Locales';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +14,9 @@ import { Locales } from '../../model/Locales';
 })
 export class DashboardComponent implements OnInit {
   localForm!: FormGroup;
+  local: Locales | undefined;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) { }
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.localForm = this.formBuilder.group({
@@ -25,8 +27,10 @@ export class DashboardComponent implements OnInit {
       logo: ['', Validators.required],
       categoria: ['', Validators.required]
     });
+    this.getLocalDetails();
   }
 
+  // Método para agregar un local
   onSubmit(): void {
     if (this.localForm.invalid) {
       return;
@@ -42,5 +46,24 @@ export class DashboardComponent implements OnInit {
         console.error('Error al agregar local:', error);
       }
     );
+  }
+
+  // Método para obtener los detalles del local
+  getLocalDetails(): void {
+    this.authService.getLocalDetails().subscribe(
+      (data) => {
+        this.local = data;
+        console.log('Detalles del local:', this.local);
+      },
+      (error) => {
+        console.error('Error al obtener los detalles del local:', error);
+      }
+    );
+  }
+
+  //Metodo para cerrar sesion
+  logout(): void {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 }
