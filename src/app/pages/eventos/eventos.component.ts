@@ -1,35 +1,58 @@
+import { Eventos } from './../../model/Evetos';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, NgModule, TemplateRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
-import { Eventos } from '../../model/Evetos';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './eventos.component.html',
   styleUrl: './eventos.component.css',
 })
 export class EventosComponent {
   selectedDate: string = '';
+  selectedEvent: Eventos | null = null;
   evento: Eventos = new Eventos();
   eventos: Eventos[] = [];
-
-  eventoForm!: FormGroup;
+  editForm!: FormGroup;
 
   @ViewChild('calendarModal') calendarModal!: TemplateRef<any>;
+  @ViewChild('editModal') editModal!: TemplateRef<any>;
 
   constructor(
     private modalService: NgbModal,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
+    this.editForm = this.fb.group({
+      titulo: ['', Validators.required],
+      fecha: ['', Validators.required],
+      lugar: ['', Validators.required],
+      descripcion: ['', Validators.required],
+    });
+  }
 
-  // Método para abrir el modal
+  // Método para abrir el modal agregar evento
   openModal(timestamp: number) {
     this.selectedDate = new Date(timestamp).toDateString();
     this.modalService.open(this.calendarModal);
+  }
+
+  // Método para abrir el modal editar evento
+  openModalEditar(evento: Eventos) {
+    this.selectedEvent = evento; // Asigna el evento seleccionado
+    this.editForm.patchValue(evento); // Rellena el formulario con los datos del evento
+    this.modalService.open(this.editModal);
   }
 
   // Método para crear un evento
@@ -61,5 +84,35 @@ export class EventosComponent {
     );
   }
 
+  //Metodo para actualiar eventos del local
+  onSubmit(): void {
+    if (this.editForm.valid && this.selectedEvent) {
+      const updatedEvent = { ...this.selectedEvent, ...this.editForm.value };
+      this.authService.actualizarEvento(this.selectedEvent.id, updatedEvent).subscribe(
+        (respuesta) => {
+          console.log('Evento actualizado exitosamente:', respuesta);
+          this.modalService.dismissAll();
+          this.obtenerEventosDelLocal();
+        },
+        (error) => {
+          console.error('Error al actualizar evento:', error);
+        }
+      );
+    }
+  }
+
+
+  //Metodo para eliminar eventos del local
+  deleteEvent(eventId: number): void {
+    this.authService.eliminarEvento(eventId).subscribe(
+      (respuesta) => {
+        console.log('Evento eliminado exitosamente:', respuesta);
+        this.obtenerEventosDelLocal();
+      },
+      (error) => {
+        console.error('Error al eliminar evento:', error);
+      }
+    );
+  }
 
 }

@@ -204,7 +204,6 @@ export class AuthService {
     );
   }
 
-  // Método para actualizar un evento
   actualizarEvento(eventId: number, datosEvento: any): Observable<any> {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -224,5 +223,26 @@ export class AuthService {
       })
     );
   }
+
+  eliminarEvento(eventId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error deleting event:', error);
+        return throwError('Error deleting event');
+      })
+    );
+  }
+
 }
 

@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <div class="row">
+    <!--Table-->
     <div class="col">
       <div class="card">
         <div class="card-body" style="width: 135%">
@@ -28,12 +29,16 @@
                   <td>{{ evento.descripcion }}</td>
                   <td><label class="badge badge-danger">Pending</label></td>
                   <td>
-                    <button class="btn">
-                      <i class="bi bi-pencil-square"></i>
+                    <button
+                    (click)="openModalEditar(evento)"
+                    >
+                      <i class="bi bi-pencil-square fs-0"></i>
                     </button>
                   </td>
                   <td>
-                    <button class="btn">
+                    <button
+                    (click)="deleteEvent(evento.id)"
+                     >
                       <i class="bi bi-trash-fill"></i>
                     </button>
                   </td>
@@ -44,8 +49,43 @@
           </div>
         </div>
       </div>
+      <!--Modal Editar-->
+      <ng-template #editModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Evento</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="titulo">Titulo</label>
+              <input type="text" id="titulo" class="form-control" formControlName="titulo">
+            </div>
+            <div class="form-group">
+              <label for="fecha">Fecha</label>
+              <input type="date" id="fecha" class="form-control" formControlName="fecha">
+            </div>
+            <div class="form-group">
+              <label for="lugar">Lugar</label>
+              <input type="text" id="lugar" class="form-control" formControlName="lugar">
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Guardar cambios</button>
+            </div>
+          </form>
+        </div>
+      </ng-template>
+
     </div>
 
+    <!---Calendario-->
     <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
       <div class="card">
         <div class="card-body">
@@ -386,7 +426,7 @@
                 </tbody>
               </table>
             </div>
-            <!-- Modal -->
+            <!-- Modal Agregar-->
             <ng-template #calendarModal let-modal>
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="calendarModalLabel">
@@ -410,6 +450,7 @@
                       type="number"
                       name="id_local"
                       [(ngModel)]="evento.id_local"
+                      [ngModelOptions]="{standalone: true}"
                       required
                     />
                   </div>
@@ -421,6 +462,7 @@
                       id="titulo"
                       name="titulo"
                       [(ngModel)]="evento.titulo"
+                      [ngModelOptions]="{standalone: true}"
                       required
                     />
                   </div>
@@ -432,6 +474,7 @@
                       id="fecha"
                       name="fecha"
                       [(ngModel)]="evento.fecha"
+                      [ngModelOptions]="{standalone: true}"
                       required
                     />
                   </div>
@@ -443,6 +486,7 @@
                       id="lugar"
                       name="lugar"
                       [(ngModel)]="evento.lugar"
+                      [ngModelOptions]="{standalone: true}"
                       required
                     />
                   </div>
@@ -450,13 +494,14 @@
                     <label class="form-label" for="descripcion"
                       >Descripción:</label
                     >
-                    <textarea
+                    <input
                       class="form-control"
                       id="descripcion"
-                      rows="3"
+                      type="text"
                       [(ngModel)]="evento.descripcion"
+                      [ngModelOptions]="{standalone: true}"
                       required
-                    ></textarea>
+                    />
                   </div>
                   <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">
