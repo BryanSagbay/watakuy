@@ -1,189 +1,236 @@
-<div class="row">
-  <div class="col-sm-12">
-    <div class="home-tab">
-      <div
-        class="d-sm-flex align-items-center justify-content-between border-bottom"
-      >
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item">
-            <a
-              class="nav-link active ps-0"
-              id="home-tab"
-              data-bs-toggle="tab"
-              href="#overview"
-              role="tab"
-              aria-controls="overview"
-              aria-selected="true"
-              >Inicio</a
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+  <title></title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../../assets/vendor/feather/feather.css" />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/mdi/css/materialdesignicons.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/ti-icons/css/themify-icons.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/font-awesome/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/typicons/typicons.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/simple-line-icons/css/simple-line-icons.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/css/vendor.bundle.base.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css"
+  />
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link
+    rel="stylesheet"
+    href="../../../assets/vendor/datatables.net-bs4/dataTables.bootstrap4.css"
+  />
+  <!-- End plugin css for this page -->
+  <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
+</head>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="home-tab">
+            <div
+              class="d-sm-flex align-items-center justify-content-between border-bottom"
             >
-          </li>
-        </ul>
-        <div>
-          <div class="btn-wrapper">
-            <button
-              type="button"
-              class="btn btn-primary btn-primary text-white me-2"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              <i class="icon-plus"></i> Agregar Local
-            </button>
-          </div>
-        </div>
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
-                  Formulario Local
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div class="container">
-                  <h2>Agregar Local</h2>
-
-                  <form
-                    [formGroup]="localForm"
-                    (ngSubmit)="onSubmit()"
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active ps-0"
+                    id="home-tab"
+                    data-bs-toggle="tab"
+                    href="#overview"
+                    role="tab"
+                    aria-controls="overview"
+                    aria-selected="true"
+                    >Inicio</a
                   >
-                    <div class="form-group">
-                      <label for="id">ID:</label>
-                      <input
-                        type="number"
-                        formControlName="id"
-                        id="id"
-                        class="form-control"
-                        placeholder="Ingrese el ID del local"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="nombre">Nombre:</label>
-                      <input
-                        type="text"
-                        formControlName="nombre"
-                        id="nombre"
-                        class="form-control"
-                        placeholder="Ingrese el nombre del local"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="direccion">Dirección:</label>
-                      <input
-                        type="text"
-                        formControlName="direccion"
-                        id="direccion"
-                        class="form-control"
-                        placeholder="Ingrese la dirección del local"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="telefono">Teléfono:</label>
-                      <input
-                        type="text"
-                        formControlName="telefono"
-                        id="telefono"
-                        class="form-control"
-                        placeholder="Ingrese el teléfono del local"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="logo">Logo:</label>
-                      <input
-                        type="text"
-                        formControlName="logo"
-                        id="logo"
-                        class="form-control"
-                        placeholder="Ingrese el URL del logo del local"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <label for="categoria">Categoría:</label>
-                      <input
-                        type="text"
-                        formControlName="categoria"
-                        id="categoria"
-                        class="form-control"
-                        placeholder="Ingrese la categoría del local"
-                      />
-                    </div>
-
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-primary">
-                        Agregar Local
-                      </button>
-                    </div>
-                  </form>
+                </li>
+              </ul>
+              <div>
+                <div class="btn-wrapper">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-primary text-white me-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    <i class="icon-plus"></i> Agregar Local
+                  </button>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success">
-                  Save changes
-                </button>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Formulario Local
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container">
+                        <h2>Agregar Local</h2>
+
+                        <form
+                          [formGroup]="localForm"
+                          (ngSubmit)="onSubmit()"
+                        >
+                          <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input
+                              type="number"
+                              formControlName="id"
+                              id="id"
+                              class="form-control"
+                              placeholder="Ingrese el ID del local"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input
+                              type="text"
+                              formControlName="nombre"
+                              id="nombre"
+                              class="form-control"
+                              placeholder="Ingrese el nombre del local"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="direccion">Dirección:</label>
+                            <input
+                              type="text"
+                              formControlName="direccion"
+                              id="direccion"
+                              class="form-control"
+                              placeholder="Ingrese la dirección del local"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="telefono">Teléfono:</label>
+                            <input
+                              type="text"
+                              formControlName="telefono"
+                              id="telefono"
+                              class="form-control"
+                              placeholder="Ingrese el teléfono del local"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="logo">Logo:</label>
+                            <input
+                              type="text"
+                              formControlName="logo"
+                              id="logo"
+                              class="form-control"
+                              placeholder="Ingrese el URL del logo del local"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="categoria">Categoría:</label>
+                            <input
+                              type="text"
+                              formControlName="categoria"
+                              id="categoria"
+                              class="form-control"
+                              placeholder="Ingrese la categoría del local"
+                            />
+                          </div>
+
+                          <div class="form-group">
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                              <button type="submit" class="btn btn-dark text-white align-items-center justify-content-center">
+                                Agregar Local
+                              </button>
+                            </div>
+
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content tab-content-basic">
+              <div
+                class="tab-pane fade show active"
+                id="overview"
+                role="tabpanel"
+                aria-labelledby="overview"
+              >
+                <div class="row">
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th >NOMBRE</th>
+                          <th >DIRRECCION</th>
+                          <th>TELEFONO</th>
+                          <th >CATEGORIA</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="local">
+                          <td>{{ local.nombre }}</td>
+                          <td>{{ local.direccion }}</td>
+                          <td>{{ local.telefono }}</td>
+                          <td>{{ local.categoria }}</td>
+                          <td><i class="bi bi-pencil-square"></i>a</td>
+                          <td></td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div *ngIf="!local">
+                    <div class="alert alert-danger" role="alert">
+                      No se encontro locales a su nombre
+                      <p>Agregue locales</p>
+                    </div>
+                  </div>
+
+
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="tab-content tab-content-basic">
-        <div
-          class="tab-pane fade show active"
-          id="overview"
-          role="tabpanel"
-          aria-labelledby="overview"
-        >
-          <div class="row">
-
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th >NOMBRE</th>
-                    <th >DIRRECCION</th>
-                    <th>TELEFONO</th>
-                    <th >CATEGORIA</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="local">
-                    <td>{{ local.nombre }}</td>
-                    <td>{{ local.direccion }}</td>
-                    <td>{{ local.telefono }}</td>
-                    <td>{{ local.categoria }}</td>
-                    <td>
-                      <label class="badge badge-success"
-                        >Pending</label
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div *ngIf="!local">
-              <div class="alert alert-danger" role="alert">
-                No se encontro locales a su nombre
-                <p>Agregue locales</p>
-              </div>
-            </div>
 
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
