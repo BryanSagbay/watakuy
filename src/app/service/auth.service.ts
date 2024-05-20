@@ -299,5 +299,6 @@ agregarFotoEvent(eventId: number, localId: number, rutaImagen: string): Observab
   );
 }
 
+//-------------end
 }
 
