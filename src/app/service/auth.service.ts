@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Propietarios } from '../model/Propietarios';
 import { Locales } from '../model/Locales';
+import { Eventos } from '../model/Evetos';
 
 @Injectable({
   providedIn: 'root',
@@ -174,6 +175,52 @@ export class AuthService {
       catchError((error) => {
         console.error('Error deleting local:', error);
         return throwError('Error deleting local');
+      })
+    );
+  }
+
+  //-------------------EVENTOS---------------------
+
+  // Método para CREAR todos los eventos
+  crearEvento(evento: Eventos): Observable<any> {
+    return this.http.post(`${this.apiUrl}/events`, evento);
+  }
+
+  // Método para obtener todos los eventos
+  obtenerEventosDelLocal(): Observable<any> {
+    const idLocal = this.getUserId();
+    if (!idLocal) {
+      console.error('No se pudo obtener el ID del local desde el localStorage.');
+      return throwError('No se pudo obtener el ID del local desde el localStorage.');
+    }
+
+    const url = `${this.apiUrl}/events/${idLocal}`;
+
+    return this.http.get<any>(url).pipe(
+      catchError((error) => {
+        console.error('Error al obtener los eventos del local:', error);
+        return throwError('Error al obtener los eventos del local');
+      })
+    );
+  }
+
+  // Método para actualizar un evento
+  actualizarEvento(eventId: number, datosEvento: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.put<any>(`${this.apiUrl}/events/${eventId}`, datosEvento, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error updating event:', error);
+        return throwError('Error updating event');
       })
     );
   }
