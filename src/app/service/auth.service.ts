@@ -96,12 +96,14 @@ export class AuthService {
     return this.http.get<Propietarios[]>(getAllUrl);
   }
 
-   // Método para agregar un local
-   addLocal(localData: any): Observable<any> {
+  // Método para agregar un local
+  addLocal(localData: any): Observable<any> {
     const userId = this.getUserId();
     if (!userId) {
       console.error('No se pudo obtener el ID del usuario del local storage.');
-      return throwError('No se pudo obtener el ID del usuario del local storage.');
+      return throwError(
+        'No se pudo obtener el ID del usuario del local storage.'
+      );
     }
 
     const token = localStorage.getItem('token');
@@ -126,7 +128,9 @@ export class AuthService {
     const idlocal = this.getUserId();
     if (!idlocal) {
       console.error('No se pudo obtener el ID del usuario del local storage.');
-      return throwError('No se pudo obtener el ID del usuario del local storage.');
+      return throwError(
+        'No se pudo obtener el ID del usuario del local storage.'
+      );
     }
 
     return this.http.get<any>(`${this.apiUrl}/locales/${idlocal}`).pipe(
@@ -137,8 +141,8 @@ export class AuthService {
     );
   }
 
-   // Método para actualizar un local existente
-   updateLocal(id: number, localData: any): Observable<any> {
+  // Método para actualizar un local existente
+  updateLocal(id: number, localData: any): Observable<any> {
     const token = localStorage.getItem('token');
     if (!token) {
       console.error('Token not found in local storage');
@@ -150,7 +154,8 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.put<any>(`${this.apiUrl}/locales/${id}`, localData, { headers })
+    return this.http
+      .put<any>(`${this.apiUrl}/locales/${id}`, localData, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error updating local:', error);
@@ -171,12 +176,14 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.delete<any>(`${this.apiUrl}/locales/${localId}`, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error deleting local:', error);
-        return throwError('Error deleting local');
-      })
-    );
+    return this.http
+      .delete<any>(`${this.apiUrl}/locales/${localId}`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error deleting local:', error);
+          return throwError('Error deleting local');
+        })
+      );
   }
 
   //-------------------EVENTOS---------------------
@@ -190,8 +197,12 @@ export class AuthService {
   obtenerEventosDelLocal(): Observable<any> {
     const idLocal = this.getUserId();
     if (!idLocal) {
-      console.error('No se pudo obtener el ID del local desde el localStorage.');
-      return throwError('No se pudo obtener el ID del local desde el localStorage.');
+      console.error(
+        'No se pudo obtener el ID del local desde el localStorage.'
+      );
+      return throwError(
+        'No se pudo obtener el ID del local desde el localStorage.'
+      );
     }
 
     const url = `${this.apiUrl}/events/${idLocal}`;
@@ -204,7 +215,8 @@ export class AuthService {
     );
   }
 
-  actualizarEvento(eventId: number, datosEvento: any): Observable<any> {
+  // Método para actualizar un evento existente
+  updateEvent(eventId: number, eventData: any): Observable<any> {
     const token = localStorage.getItem('token');
     if (!token) {
       console.error('Token not found in local storage');
@@ -216,12 +228,14 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.put<any>(`${this.apiUrl}/events/${eventId}`, datosEvento, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error updating event:', error);
-        return throwError('Error updating event');
-      })
-    );
+    return this.http
+      .put<any>(`${this.apiUrl}/events/${eventId}`, eventData, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating event:', error);
+          return throwError('Error updating event');
+        })
+      );
   }
 
   eliminarEvento(eventId: number): Observable<any> {
@@ -236,13 +250,13 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.delete<any>(`${this.apiUrl}/events/${eventId}`, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error deleting event:', error);
-        return throwError('Error deleting event');
-      })
-    );
+    return this.http
+      .delete<any>(`${this.apiUrl}/events/${eventId}`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error deleting event:', error);
+          return throwError('Error deleting event');
+        })
+      );
   }
-
 }
-

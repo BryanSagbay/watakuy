@@ -35,6 +35,7 @@ export class EventosComponent {
     private fb: FormBuilder
   ) {
     this.editForm = this.fb.group({
+      id: ['', Validators.required],
       titulo: ['', Validators.required],
       fecha: ['', Validators.required],
       lugar: ['', Validators.required],
@@ -84,11 +85,11 @@ export class EventosComponent {
     );
   }
 
-  //Metodo para actualiar eventos del local
-  onSubmit(): void {
-    if (this.editForm.valid && this.selectedEvent) {
-      const updatedEvent = { ...this.selectedEvent, ...this.editForm.value };
-      this.authService.actualizarEvento(this.selectedEvent.id, updatedEvent).subscribe(
+  // Método para actualizar un evento
+  actualizarEvento(): void {
+    if (this.selectedEvent && this.editForm.valid) {
+      const eventoActualizado = { ...this.selectedEvent, ...this.editForm.value };
+      this.authService.updateEvent(this.selectedEvent.id, eventoActualizado).subscribe(
         (respuesta) => {
           console.log('Evento actualizado exitosamente:', respuesta);
           this.modalService.dismissAll();
@@ -101,18 +102,5 @@ export class EventosComponent {
     }
   }
 
-
-  //Metodo para eliminar eventos del local
-  deleteEvent(eventId: number): void {
-    this.authService.eliminarEvento(eventId).subscribe(
-      (respuesta) => {
-        console.log('Evento eliminado exitosamente:', respuesta);
-        this.obtenerEventosDelLocal();
-      },
-      (error) => {
-        console.error('Error al eliminar evento:', error);
-      }
-    );
-  }
 
 }

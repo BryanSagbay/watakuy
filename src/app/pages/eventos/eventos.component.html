@@ -10,6 +10,7 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>Id Evento</th>
                   <th>Id Local</th>
                   <th>Titulo</th>
                   <th>Fecha</th>
@@ -22,6 +23,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let evento of eventos">
+                  <td>{{ evento.id }}</td>
                   <td>{{ evento.id_local }}</td>
                   <td>{{ evento.titulo }}</td>
                   <td>{{ evento.fecha }}</td>
@@ -37,7 +39,7 @@
                   </td>
                   <td>
                     <button
-                    (click)="deleteEvent(evento.id)"
+
                      >
                       <i class="bi bi-trash-fill"></i>
                     </button>
@@ -58,7 +60,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="editForm">
             <div class="form-group">
               <label for="titulo">Titulo</label>
               <input type="text" id="titulo" class="form-control" formControlName="titulo">
@@ -77,7 +79,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Cancelar</button>
-              <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Guardar cambios</button>
+              <button type="submit" class="btn btn-primary" (click)="actualizarEvento()">Guardar cambios</button>
             </div>
           </form>
         </div>
