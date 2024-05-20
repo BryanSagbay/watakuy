@@ -1,1 +1,48 @@
-<p>fotos works!</p>
+<!-- fotos.component.html -->
+
+<div class="container text-start">
+  <h2>Agregar Foto a Local</h2>
+  <form (ngSubmit)="agregarFoto()" #fotoForm="ngForm">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="localId">ID del Local:</label>
+          <br>
+          <input
+            type="number"
+            class="form-control"
+            id="localId"
+            name="localId"
+            [(ngModel)]="localId"
+            required
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="rutaImagen">URL de la Imagen:</label>
+          <br>
+          <input
+            type="text"
+            class="form-control"
+            id="rutaImagen"
+            name="rutaImagen"
+            [(ngModel)]="rutaImagen"
+            required
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button
+            type="submit"
+            class="btn btn-primary mt-3 py-2"
+            [disabled]="!fotoForm.valid"
+          >
+            Agregar Foto
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
