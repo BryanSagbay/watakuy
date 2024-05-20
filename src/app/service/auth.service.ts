@@ -135,4 +135,42 @@ export class AuthService {
       })
     );
   }
+
+   // Método para actualizar un local existente
+   updateLocal(localId: number, updatedData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    // Construye la URL con el ID del local
+    const url = `${this.apiUrl}/locales/${localId}`;
+
+    return this.http.put<any>(url, updatedData, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error al actualizar local:', error);
+        return throwError('Error al actualizar local');
+      })
+    );
+  }
+
+  // Método para eliminar un local
+  deleteLocal(localId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    // Construye la URL con el ID del local
+    const url = `${this.apiUrl}/locales/${localId}`;
+
+    return this.http.delete<any>(url, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error al eliminar local:', error);
+        return throwError('Error al eliminar local');
+      })
+    );
+  }
 }
+

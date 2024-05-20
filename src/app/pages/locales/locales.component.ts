@@ -61,6 +61,41 @@ export class LocalesComponent implements OnInit {
     );
   }
 
+  // Método para actualizar un local
+  onUpdateLocal(): void {
+    const updatedData = this.localForm.value;
+    const localId = this.local?.id;
+    if (localId && updatedData) {
+      this.authService.updateLocal(localId, updatedData).subscribe(
+        (response) => {
+          console.log('Local actualizado correctamente:', response);
+          // Actualiza la lista de locales después de la actualización
+          this.getLocalDetails();
+        },
+        (error) => {
+          console.error('Error al actualizar el local:', error);
+        }
+      );
+    }
+  }
+
+  // Método para eliminar un local
+  onDeleteLocal(): void {
+    const localId = this.local?.id;
+    if (localId) {
+      this.authService.deleteLocal(localId).subscribe(
+        (response) => {
+          console.log('Local eliminado correctamente:', response);
+          // Actualiza la lista de locales después de la eliminación
+          this.getLocalDetails();
+        },
+        (error) => {
+          console.error('Error al eliminar el local:', error);
+        }
+      );
+    }
+  }
+
   //Metodo para cerrar sesion
   logout(): void {
     this.authService.logout();
