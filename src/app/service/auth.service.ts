@@ -137,38 +137,43 @@ export class AuthService {
   }
 
    // Método para actualizar un local existente
-   updateLocal(localId: number, updatedData: any): Observable<any> {
+   updateLocal(id: number, localData: any): Observable<any> {
     const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
 
-    // Construye la URL con el ID del local
-    const url = `${this.apiUrl}/locales/${localId}`;
-
-    return this.http.put<any>(url, updatedData, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error al actualizar local:', error);
-        return throwError('Error al actualizar local');
-      })
-    );
+    return this.http.put<any>(`${this.apiUrl}/locales/${id}`, localData, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating local:', error);
+          return throwError('Error updating local');
+        })
+      );
   }
 
   // Método para eliminar un local
   deleteLocal(localId: number): Observable<any> {
     const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
+
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
 
-    // Construye la URL con el ID del local
-    const url = `${this.apiUrl}/locales/${localId}`;
-
-    return this.http.delete<any>(url, { headers }).pipe(
+    return this.http.delete<any>(`${this.apiUrl}/locales/${localId}`, { headers }).pipe(
       catchError((error) => {
-        console.error('Error al eliminar local:', error);
-        return throwError('Error al eliminar local');
+        console.error('Error deleting local:', error);
+        return throwError('Error deleting local');
       })
     );
   }
