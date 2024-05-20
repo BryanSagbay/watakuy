@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './fotos.component.css'
 })
 export class FotosComponent {
+  eventId: number = 0;
   localId: number = 0;
   rutaImagen: string = "";
 
@@ -29,12 +30,22 @@ export class FotosComponent {
     this.authService.agregarFotoLocal(imagelocal).subscribe(
       (response) => {
         console.log('Foto agregada al local:', response);
-        // Aquí puedes manejar la respuesta, por ejemplo, actualizar la interfaz de usuario.
       },
       (error) => {
         console.error('Error al agregar foto al local:', error);
-        // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje al usuario.
+      }
+    );
+  }
+
+  agregarFotoEvent(eventId: number, localId: number, rutaImagen: string) {
+    this.authService.agregarFotoEvent(eventId, localId, rutaImagen).subscribe(
+      (response) => {
+        console.log('Imagen agregada exitosamente:', response);
+      },
+      (error) => {
+        console.error('Error al agregar imagen:', error);
       }
     );
   }
 }
+

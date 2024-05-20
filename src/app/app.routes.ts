@@ -6,6 +6,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EventosComponent } from './pages/eventos/eventos.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 import { LocalesComponent } from './pages/locales/locales.component';
+import { FotosComponent } from './pages/fotos/fotos.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,11 @@ export const routes: Routes = [
       {
         path: 'eventos',
         component: EventosComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'fotos',
+        component: FotosComponent,
         canActivate: [AuthGuardService],
       },
       {

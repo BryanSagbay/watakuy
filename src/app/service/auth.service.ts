@@ -4,6 +4,7 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Propietarios } from '../model/Propietarios';
 import { Locales } from '../model/Locales';
 import { Eventos } from '../model/Evetos';
+import { ImagesLocales } from '../model/ImagesEvents';
 
 @Injectable({
   providedIn: 'root',
@@ -238,24 +239,65 @@ export class AuthService {
       );
   }
 
-    //Metodo para eliminar un evento
-    eliminarEvento(eventoId: number): Observable<any> {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('Token not found in local storage');
-        return throwError('Token not found in local storage');
-      }
+  //Metodo para eliminar un evento
+  eliminarEvento(eventoId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
 
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
 
-      return this.http.delete(`${this.apiUrl}/events/${eventoId}`, { headers }).pipe(
+    return this.http
+      .delete(`${this.apiUrl}/events/${eventoId}`, { headers })
+      .pipe(
         catchError((error) => {
           console.error('Error deleting event:', error);
           return throwError('Error deleting event');
         })
       );
-    }
+  }
+
+  //---------------------Agregar Imagenes---------------------
+
+ // Método para agregar una imagen al local
+
+ agregarFotoLocal(imagelocal: ImagesLocales): Observable<any> {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Token not found in local storage');
+    return throwError('Token not found in local storage');
+  }
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
+
+  return this.http.post<any>(`${this.apiUrl}/image_local/${imagelocal.id_local}`, imagelocal, { headers }).pipe(
+    catchError((error) => {
+      console.error('Error adding photo to local:', error);
+      return throwError('Error adding photo to local');
+    })
+  );
 }
+
+//Metodo para agregar una imagen a un evento
+agregarFotoEvent(eventId: number, localId: number, rutaImagen: string): Observable<any> {
+  const url = `${this.apiUrl}/image/${eventId}/${localId}`;
+  const data = { ruta_imagen: rutaImagen };
+
+  return this.http.post(url, data).pipe(
+    catchError((error) => {
+      console.error('Error adding image:', error);
+      return throwError('Error adding image');
+    })
+  );
+}
+
+}
+
