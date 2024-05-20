@@ -48,9 +48,7 @@ export class LocalesComponent implements OnInit {
 
     this.authService.addLocal(this.localForm.value).subscribe(
       (response: Locales) => {
-        // Tipa la respuesta como Locales
         console.log('Local agregado correctamente:', response);
-        // Limpiar el formulario después de agregar el local
         this.localForm.reset();
       },
       (error) => {
@@ -93,7 +91,7 @@ export class LocalesComponent implements OnInit {
       this.authService.updateLocal(id, newData).subscribe(
         (response) => {
           console.log('Local actualizado correctamente:', response);
-          // Actualizar la lista de locales después de la actualización
+
           this.getLocalDetails();
         },
         (error) => {

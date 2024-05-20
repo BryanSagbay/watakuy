@@ -51,8 +51,8 @@ export class EventosComponent {
 
   // Método para abrir el modal editar evento
   openModalEditar(evento: Eventos) {
-    this.selectedEvent = evento; // Asigna el evento seleccionado
-    this.editForm.patchValue(evento); // Rellena el formulario con los datos del evento
+    this.selectedEvent = evento;
+    this.editForm.patchValue(evento);
     this.modalService.open(this.editModal);
   }
 
