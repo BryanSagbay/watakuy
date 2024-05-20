@@ -238,25 +238,24 @@ export class AuthService {
       );
   }
 
-  eliminarEvento(eventId: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('Token not found in local storage');
-      return throwError('Token not found in local storage');
-    }
+    //Metodo para eliminar un evento
+    eliminarEvento(eventoId: number): Observable<any> {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Token not found in local storage');
+        return throwError('Token not found in local storage');
+      }
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      });
 
-    return this.http
-      .delete<any>(`${this.apiUrl}/events/${eventId}`, { headers })
-      .pipe(
+      return this.http.delete(`${this.apiUrl}/events/${eventoId}`, { headers }).pipe(
         catchError((error) => {
           console.error('Error deleting event:', error);
           return throwError('Error deleting event');
         })
       );
-  }
+    }
 }

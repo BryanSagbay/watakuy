@@ -61,6 +61,8 @@ export class EventosComponent {
     this.authService.crearEvento(this.evento).subscribe(
       (respuesta) => {
         console.log('Evento creado exitosamente:', respuesta);
+        this.modalService.dismissAll();
+        this.obtenerEventosDelLocal();
       },
       (error) => {
         console.error('Error al crear evento:', error);
@@ -73,17 +75,6 @@ export class EventosComponent {
     this.obtenerEventosDelLocal();
   }
 
-  // Método para obtener eventos del local
-  obtenerEventosDelLocal(): void {
-    this.authService.obtenerEventosDelLocal().subscribe(
-      (eventos) => {
-        this.eventos = eventos;
-      },
-      (error) => {
-        console.error('Error al obtener eventos:', error);
-      }
-    );
-  }
 
   // Método para actualizar un evento
   actualizarEvento(): void {
@@ -101,6 +92,31 @@ export class EventosComponent {
       );
     }
   }
+  //Metodo para eliminar un evento
+  eliminarEvento(evento: Eventos): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
+      this.authService.eliminarEvento(evento.id).subscribe(
+        (respuesta) => {
+          console.log('Evento eliminado exitosamente:', respuesta);
+          this.obtenerEventosDelLocal();
+        },
+        (error) => {
+          console.error('Error al eliminar evento:', error);
+        }
+      );
+    }
+  }
 
+   // Método para obtener eventos del local
+   obtenerEventosDelLocal(): void {
+    this.authService.obtenerEventosDelLocal().subscribe(
+      (eventos) => {
+        this.eventos = eventos;
+      },
+      (error) => {
+        console.error('Error al obtener eventos:', error);
+      }
+    );
+  }
 
 }
