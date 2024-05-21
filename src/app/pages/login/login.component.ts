@@ -13,8 +13,6 @@ import Swal from 'sweetalert2';
   styleUrl: './login.component.css'
 })
 
-
-
 export class LoginComponent {
   loginObj: any = {};
 
@@ -54,7 +52,6 @@ export class LoginComponent {
   }
 
 }
-
 export class Login {
   nombre_usuario_propietario: string = '';
   contrasena_propietario: string = '';
