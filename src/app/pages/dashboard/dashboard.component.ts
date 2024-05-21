@@ -13,12 +13,12 @@ import Swal from 'sweetalert2';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  //Metodo para cerrar sesion
+
   constructor(private authService: AuthService, private router: Router) {}
 
   // Método para cerrar sesión con confirmación
   confirmLogout(event: Event): void {
-    event.preventDefault(); // Detiene el comportamiento predeterminado del enlace
+    event.preventDefault();
 
     Swal.fire({
       title: '¿Estás seguro?',
