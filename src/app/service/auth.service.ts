@@ -152,23 +152,6 @@ export class AuthService {
   }
 
   // Método para obtener los detalles de un local por su ID
-  // getLocalDetails(): Observable<Locales> {
-  //   const idlocal = this.getUserId();
-  //   if (!idlocal) {
-  //     console.error('No se pudo obtener el ID del usuario del local storage.');
-  //     return throwError(
-  //       'No se pudo obtener el ID del usuario del local storage.'
-  //     );
-  //   }
-
-  //   return this.http.get<any>(`${this.apiUrl}/locales/${idlocal}`).pipe(
-  //     catchError((error) => {
-  //       console.error('Error al obtener los detalles del local:', error);
-  //       return throwError('Error al obtener los detalles del local');
-  //     })
-  //   );
-  // }
-
   getLocalDetails(duenoLocalId: number): Observable<Locales[]> {
     return this.http.get<any>(`${this.apiUrl}/locales/${duenoLocalId}`).pipe(
       catchError((error) => {
