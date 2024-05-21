@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './eventos.component.html',
   styleUrl: './eventos.component.css',
 })
