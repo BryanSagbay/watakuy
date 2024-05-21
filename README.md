@@ -53,8 +53,11 @@ La estructura del proyecto sigue la convención de Angular y se compone de compo
 
 A continuación, se muestran algunas capturas de pantalla de la interfaz del panel de control:
 
+<div align='center'>
+  
 ![image](https://github.com/BryanSagbay/watakuy/assets/85771422/05373a6e-0443-49a6-917f-5869af4432d7)
 
+</div>
 
 ## Contribución:
 
