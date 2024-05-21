@@ -6,6 +6,7 @@ import { AuthService } from '../../service/auth.service';
 import { ImagesLocales } from '../../model/ImagesEvents';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-fotos',
@@ -17,12 +18,12 @@ import { CommonModule } from '@angular/common';
 export class FotosComponent {
   // Variables para el primer formulario
   localIdLocalForm: number = 0;
-  rutaImagenLocalForm: string = "";
+  rutaImagenLocalForm: string = '';
 
   // Variables para el segundo formulario
   localIdEventoForm: number = 0;
   eventIdEventoForm: number = 0;
-  rutaImagenEventoForm: string = "";
+  rutaImagenEventoForm: string = '';
 
   constructor(private authService: AuthService) {}
 
@@ -34,11 +35,21 @@ export class FotosComponent {
 
     this.authService.agregarFotoLocal(imagelocal).subscribe(
       (response) => {
-        console.log('Foto agregada al local:', response);
         this.resetFormLocal();
+        Swal.fire({
+          title: '¡Foto agregada!',
+          text: 'La foto se agregó exitosamente al local.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
       },
       (error) => {
-        console.error('Error al agregar foto al local:', error);
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Hubo un error al agregar la foto al local. Por favor, inténtelo de nuevo más tarde.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
       }
     );
   }
@@ -46,11 +57,21 @@ export class FotosComponent {
   agregarFotoEvent() {
     this.authService.agregarFotoEvent(this.eventIdEventoForm, this.localIdEventoForm, this.rutaImagenEventoForm).subscribe(
       (response) => {
-        console.log('Imagen agregada exitosamente:', response);
         this.resetFormEvento();
+        Swal.fire({
+          title: '¡Imagen agregada!',
+          text: 'La imagen se agregó exitosamente al evento.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
       },
       (error) => {
-        console.error('Error al agregar imagen:', error);
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Hubo un error al agregar la imagen al evento. Por favor, inténtelo de nuevo más tarde.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
       }
     );
   }
@@ -65,5 +86,4 @@ export class FotosComponent {
     this.eventIdEventoForm = 0;
     this.rutaImagenEventoForm = '';
   }
-
 }
