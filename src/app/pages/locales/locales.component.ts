@@ -10,6 +10,7 @@ import { Locales } from '../../model/Locales';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-locales',
@@ -26,6 +27,7 @@ export class LocalesComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +51,24 @@ export class LocalesComponent implements OnInit {
     this.authService.addLocal(this.localForm.value).subscribe(
       (response: Locales) => {
         console.log('Local agregado correctamente:', response);
-        this.localForm.reset();
+        Swal.fire({
+          title: '¡Local agregado!',
+          text: 'El local se agregó exitosamente.',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        }).then(() => {
+          this.localForm.reset();
+          this.getLocalDetails();
+        });
       },
       (error) => {
         console.error('Error al agregar local:', error);
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Hubo un error al agregar el local. Por favor, inténtelo de nuevo más tarde.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
       }
     );
   }
@@ -79,7 +95,7 @@ export class LocalesComponent implements OnInit {
       nombre: local.nombre,
       direccion: local.direccion,
       telefono: local.telefono,
-      categoria: local.categoria
+      categoria: local.categoria,
     });
   }
 
@@ -90,12 +106,22 @@ export class LocalesComponent implements OnInit {
       const newData = this.localForm.value;
       this.authService.updateLocal(id, newData).subscribe(
         (response) => {
-          console.log('Local actualizado correctamente:', response);
-
-          this.getLocalDetails();
+          Swal.fire({
+            title: '¡Local actualizado!',
+            text: 'El local se actualizó correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          }).then(() => {
+            this.getLocalDetails();
+          });
         },
         (error) => {
-          console.error('Error al actualizar el local:', error);
+          Swal.fire({
+            title: '¡Error!',
+            text: 'Hubo un error al actualizar el local. Por favor, inténtelo de nuevo más tarde.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
         }
       );
     }
@@ -103,16 +129,36 @@ export class LocalesComponent implements OnInit {
 
   // Método para eliminar un local
   deleteLocal(localId: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este local?')) {
-      this.authService.deleteLocal(localId).subscribe(
-        (response) => {
-          console.log('Local deleted successfully:', response);
-        },
-        (error) => {
-          console.error('Error deleting local:', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro de que deseas eliminar este local?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.deleteLocal(localId).subscribe(
+          (response) => {
+            Swal.fire({
+              title: '¡Local eliminado!',
+              text: 'El local se eliminó exitosamente.',
+              icon: 'success',
+              confirmButtonText: 'Ok',
+            }).then(() => {
+              this.getLocalDetails();
+            });
+          },
+          (error) => {
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Hubo un error al eliminar el local. Por favor, inténtelo de nuevo más tarde.',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          }
+        );
+      }
+    });
   }
-
 }
