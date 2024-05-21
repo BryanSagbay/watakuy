@@ -10,7 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-eventos',
@@ -19,7 +19,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './eventos.component.html',
   styleUrl: './eventos.component.css',
 })
-export class EventosComponent {
+export class EventosComponent  {
   selectedDate: string = '';
   selectedEvent: Eventos | null = null;
   evento: Eventos = new Eventos();
@@ -60,21 +60,25 @@ export class EventosComponent {
   crearEvento(): void {
     this.authService.crearEvento(this.evento).subscribe(
       (respuesta) => {
-        console.log('Evento creado exitosamente:', respuesta);
         this.modalService.dismissAll();
         this.obtenerEventosDelLocal();
+        Swal.fire({
+          title: '¡Evento creado!',
+          text: 'El evento se creó exitosamente.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
       },
       (error) => {
-        console.error('Error al crear evento:', error);
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Hubo un error al crear el evento. Por favor, inténtelo de nuevo más tarde.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
       }
     );
   }
-
-  // Método para obtener eventos del local
-  ngOnInit(): void {
-    this.obtenerEventosDelLocal();
-  }
-
 
   // Método para actualizar un evento
   actualizarEvento(): void {
@@ -82,33 +86,65 @@ export class EventosComponent {
       const eventoActualizado = { ...this.selectedEvent, ...this.editForm.value };
       this.authService.updateEvent(this.selectedEvent.id, eventoActualizado).subscribe(
         (respuesta) => {
-          console.log('Evento actualizado exitosamente:', respuesta);
           this.modalService.dismissAll();
           this.obtenerEventosDelLocal();
+          Swal.fire({
+            title: '¡Evento actualizado!',
+            text: 'El evento se actualizó exitosamente.',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
         },
         (error) => {
-          console.error('Error al actualizar evento:', error);
-        }
-      );
-    }
-  }
-  //Metodo para eliminar un evento
-  eliminarEvento(evento: Eventos): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
-      this.authService.eliminarEvento(evento.id).subscribe(
-        (respuesta) => {
-          console.log('Evento eliminado exitosamente:', respuesta);
-          this.obtenerEventosDelLocal();
-        },
-        (error) => {
-          console.error('Error al eliminar evento:', error);
+          Swal.fire({
+            title: '¡Error!',
+            text: 'Hubo un error al actualizar el evento. Por favor, inténtelo de nuevo más tarde.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }
       );
     }
   }
 
-   // Método para obtener eventos del local
-   obtenerEventosDelLocal(): void {
+  // Método para eliminar un evento
+  eliminarEvento(evento: Eventos): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Estás seguro de que deseas eliminar este evento?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.eliminarEvento(evento.id).subscribe(
+          (respuesta) => {
+            console.log('Evento eliminado exitosamente:', respuesta);
+            this.obtenerEventosDelLocal();
+            Swal.fire({
+              title: '¡Evento eliminado!',
+              text: 'El evento se eliminó exitosamente.',
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            });
+          },
+          (error) => {
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Hubo un error al eliminar el local. Por favor, inténtelo de nuevo más tarde.',
+              icon: 'error',
+              confirmButtonText: 'Ok',
+            });
+          }
+        );
+      }
+    });
+  }
+  // Método para obtener eventos del local
+  obtenerEventosDelLocal(): void {
     this.authService.obtenerEventosDelLocal().subscribe(
       (eventos) => {
         this.eventos = eventos;
@@ -117,6 +153,11 @@ export class EventosComponent {
         console.error('Error al obtener eventos:', error);
       }
     );
+  }
+
+  // Método para inicializar el componente
+  ngOnInit(): void {
+    this.obtenerEventosDelLocal();
   }
 
 }
