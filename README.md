@@ -38,7 +38,7 @@ Este proyecto de Angular es un panel de control que permite administrar locales 
 
 ### Instalación y Uso:
 
-1. Clona el repositorio desde ```bash https://github.com/BryanSagbay/watakuy.git  ```
+1. Clona el repositorio desde ```https://github.com/BryanSagbay/watakuy.git  ```
 2. Instala las dependencias ejecutando `npm install`.
 3. Ejecuta el proyecto con `ng serve`.
 4. Accede al panel de control desde tu navegador.
