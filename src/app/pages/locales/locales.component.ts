@@ -78,7 +78,6 @@ export class LocalesComponent implements OnInit {
     this.authService.getLocalDetails().subscribe(
       (data) => {
         this.local = data;
-        console.log('Detalles del local:', this.local);
       },
       (error) => {
         console.error('Error al obtener los detalles del local:', error);
