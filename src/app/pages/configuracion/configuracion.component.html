@@ -4,7 +4,6 @@
     <h4 class="py-3 mb-4">
       <span class="text-muted fw-light">Account Settings</span> / Account
     </h4>
-
     <div class="row">
       <div class="col-md-12">
         <ul class="nav nav-tabs">
@@ -35,7 +34,6 @@
             <a class="nav-link">Other</a>
           </li>
         </ul>
-
         <div class="collapse multi-collapse show" id="primero">
           <div class="card mb-4">
             <h5 class="card-header">Profile Details</h5>
@@ -93,50 +91,49 @@
             <div class="card-body">
               <form
                 id="formAccountSettings"
-                method="POST"
-                onsubmit="return false"
+                [formGroup]="updateUserForm"
+                (ngSubmit)="actualizarDatosUsuario()"
               >
                 <div class="row">
                   <div class="mb-3 col-md-6">
                     <label for="firstName" class="form-label">First Name</label>
                     <input
+                      id="nombre_propietario"
+                      formControlName="nombre_propietario"
                       class="form-control"
                       type="text"
-                      id="firstName"
                       name="firstName"
-                      value="John"
-                      autofocus=""
                     />
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="lastName" class="form-label">Last Name</label>
                     <input
+                      id="apellido_propietario"
+                      formControlName="apellido_propietario"
                       class="form-control"
                       type="text"
                       name="lastName"
-                      id="lastName"
-                      value="Doe"
                     />
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="email" class="form-label">E-mail</label>
                     <input
+                      id="correo_propietario"
+                      formControlName="correo_propietario"
                       class="form-control"
                       type="text"
-                      id="email"
                       name="email"
-                      value="john.doe@example.com"
-                      placeholder="john.doe@example.com"
                     />
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="organization" class="form-label"
-                      >Organization</label
+                      >User Name</label
                     >
                     <input
+                      id="nombre_usuario_propietario"
+                      formControlName="nombre_usuario_propietario"
                       type="text"
                       class="form-control"
-                      id="organization"
                       name="organization"
                       value="ThemeSelection"
                     />
@@ -146,47 +143,28 @@
                       >Phone Number</label
                     >
                     <div class="input-group input-group-merge">
-                      <span class="input-group-text">US (+1)</span>
+                      <span class="input-group-text">EC (+593)</span>
                       <input
-                        type="text"
-                        id="phoneNumber"
+                        type="tel"
+                        id="telefono_propietario"
+                        formControlName="telefono_propietario"
                         name="phoneNumber"
                         class="form-control"
-                        placeholder="202 555 0111"
                       />
                     </div>
                   </div>
                   <div class="mb-3 col-md-6">
-                    <label for="address" class="form-label">Address</label>
+                    <label for="address" class="form-label">Password</label>
                     <input
+                      id="contrasena_propietario"
+                      formControlName="contrasena_propietario"
                       type="text"
                       class="form-control"
-                      id="address"
                       name="address"
                       placeholder="Address"
                     />
                   </div>
-                  <div class="mb-3 col-md-6">
-                    <label for="state" class="form-label">State</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="state"
-                      name="state"
-                      placeholder="California"
-                    />
-                  </div>
-                  <div class="mb-3 col-md-6">
-                    <label for="zipCode" class="form-label">Zip Code</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="zipCode"
-                      name="zipCode"
-                      placeholder="231465"
-                      maxlength="6"
-                    />
-                  </div>
+
                   <div class="mb-3 col-md-6">
                     <label class="form-label" for="country">Country</label>
                     <select id="country" class="select2 form-select">
@@ -290,9 +268,6 @@
                   <button type="submit" class="btn btn-primary me-2">
                     Save changes
                   </button>
-                  <button type="reset" class="btn btn-outline-secondary">
-                    Cancel
-                  </button>
                 </div>
               </form>
             </div>
@@ -333,14 +308,7 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-  <!-- / Content -->
-
 </div>
-
-
-
-

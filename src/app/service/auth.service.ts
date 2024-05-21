@@ -95,6 +95,36 @@ export class AuthService {
     });
   }
 
+   // Método para obtener los datos del dueño local por ID
+   getDuenoLocal(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/userlogin/${id}`);
+  }
+
+  // Metodo para actualizar los datos del dueño local
+  updateUser(id: number, localData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .put<any>(`${this.apiUrl}/duenos/${id}`, localData, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error updating local:', error);
+          return throwError('Error updating local');
+        })
+      );
+  }
+
+  //-------------------LOCALES---------------------
+
   // Método para obtener todos los dueños locales
   getAllDuenosLocales(): Observable<Propietarios[]> {
     const getAllUrl = `${this.apiUrl}/duenosGet`;
@@ -323,36 +353,4 @@ export class AuthService {
     );
   }
 
-  // Método para obtener los datos del dueño local por ID
-  getDuenoLocal(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/userlogin/${id}`);
-  }
-
-
-  // Método para actualizar los datos del dueño del local
-  // updateOwnerData(ownerData: any): Observable<any> {
-  //   const userId = this.getUserId(); // Obtenemos el ID del usuario actual del local storage
-  //   if (!userId) {
-  //     console.error('No se pudo obtener el ID del usuario');
-  //     return throwError('Error al obtener el ID del usuario');
-  //   }
-
-  //   return this.http
-  //     .put<any>(`${this.apiUrl}/duenos/${userId}`, ownerData)
-  //     .pipe(
-  //       tap((res) => {
-  //         // Actualizamos los datos del usuario en el local storage si la solicitud es exitosa
-  //         localStorage.setItem('user', JSON.stringify(res.updatedUserData));
-  //       }),
-  //       catchError((error) => {
-  //         console.error(
-  //           'Error al actualizar los datos del dueño del local:',
-  //           error
-  //         );
-  //         return throwError(
-  //           'Error al actualizar los datos del dueño del local'
-  //         );
-  //       })
-  //     );
-  // }
 }
