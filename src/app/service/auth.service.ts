@@ -18,6 +18,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  //-------------------LOGIN---------------------
   private isLocalStorageAvailable(): boolean {
     try {
       const testKey = '__test__';
@@ -123,6 +124,11 @@ export class AuthService {
       );
   }
 
+  // Método para obtener el nombre del propietario por ID
+  // Método para obtener el nombre del propietario
+  getNombrePropietario(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/get-nombre/${id}`);
+  }
   //-------------------LOCALES---------------------
 
   // Método para agregar un local
