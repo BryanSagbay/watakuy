@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Propietarios } from '../model/Propietarios';
@@ -113,7 +117,6 @@ export class AuthService {
       Authorization: `Bearer ${token}`,
     });
 
-    // Construye la URL con el ID del usuario
     const url = `${this.apiUrl}/locales/${userId}`;
 
     return this.http.post<any>(url, localData, { headers }).pipe(
@@ -264,51 +267,91 @@ export class AuthService {
 
   //---------------------Agregar Imagenes---------------------
 
- // Método para agregar una imagen al local
+  // Método para agregar una imagen al local
 
- agregarFotoLocal(imagelocal: ImagesLocales): Observable<any> {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    console.error('Token not found in local storage');
-    return throwError('Token not found in local storage');
+  agregarFotoLocal(imagelocal: ImagesLocales): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .post<any>(
+        `${this.apiUrl}/image_local/${imagelocal.id_local}`,
+        imagelocal,
+        { headers }
+      )
+      .pipe(
+        catchError((error) => {
+          console.error('Error adding photo to local:', error);
+          return throwError('Error adding photo to local');
+        })
+      );
   }
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  });
+  //Metodo para agregar una imagen a un evento
+  agregarFotoEvent(
+    eventId: number,
+    localId: number,
+    rutaImagen: string
+  ): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return throwError('Token not found in local storage');
+    }
 
-  return this.http.post<any>(`${this.apiUrl}/image_local/${imagelocal.id_local}`, imagelocal, { headers }).pipe(
-    catchError((error) => {
-      console.error('Error adding photo to local:', error);
-      return throwError('Error adding photo to local');
-    })
-  );
-}
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
 
-//Metodo para agregar una imagen a un evento
-agregarFotoEvent(eventId: number, localId: number, rutaImagen: string): Observable<any> {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    console.error('Token not found in local storage');
-    return throwError('Token not found in local storage');
+    const url = `${this.apiUrl}/image/${eventId}/${localId}`;
+    const data = { ruta_imagen_evento: rutaImagen };
+
+    return this.http.post(url, data, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error adding image:', error);
+        return throwError('Error adding image');
+      })
+    );
   }
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  });
+  // Método para obtener los datos del dueño local por ID
+  getDuenoLocal(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/userlogin/${id}`);
+  }
 
-  const url = `${this.apiUrl}/image/${eventId}/${localId}`;
-  const data = { ruta_imagen_evento: rutaImagen };
+  // Método para actualizar los datos del dueño del local
+  updateOwnerData(ownerData: any): Observable<any> {
+    const userId = this.getUserId(); // Obtenemos el ID del usuario actual del local storage
+    if (!userId) {
+      console.error('No se pudo obtener el ID del usuario');
+      return throwError('Error al obtener el ID del usuario');
+    }
 
-  return this.http.post(url, data, {headers}).pipe(
-    catchError((error: HttpErrorResponse) => {
-      console.error('Error adding image:', error);
-      return throwError('Error adding image');
-    })
-  );
+    return this.http
+      .put<any>(`${this.apiUrl}/duenos/${userId}`, ownerData)
+      .pipe(
+        tap((res) => {
+          // Actualizamos los datos del usuario en el local storage si la solicitud es exitosa
+          localStorage.setItem('user', JSON.stringify(res.updatedUserData));
+        }),
+        catchError((error) => {
+          console.error(
+            'Error al actualizar los datos del dueño del local:',
+            error
+          );
+          return throwError(
+            'Error al actualizar los datos del dueño del local'
+          );
+        })
+      );
+  }
 }
-
-}
-
