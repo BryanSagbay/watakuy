@@ -15,21 +15,27 @@ import { CommonModule } from '@angular/common';
   styleUrl: './fotos.component.css'
 })
 export class FotosComponent {
-  eventId: number = 0;
-  localId: number = 0;
-  rutaImagen: string = "";
+  // Variables para el primer formulario
+  localIdLocalForm: number = 0;
+  rutaImagenLocalForm: string = "";
+
+  // Variables para el segundo formulario
+  localIdEventoForm: number = 0;
+  eventIdEventoForm: number = 0;
+  rutaImagenEventoForm: string = "";
 
   constructor(private authService: AuthService) {}
 
   agregarFoto() {
-    const imagelocal: ImagesLocales = {
-      id_local: this.localId,
-      ruta_imagen: this.rutaImagen
+    const imagelocal = {
+      id_local: this.localIdLocalForm,
+      ruta_imagen: this.rutaImagenLocalForm
     };
 
     this.authService.agregarFotoLocal(imagelocal).subscribe(
       (response) => {
         console.log('Foto agregada al local:', response);
+        this.resetFormLocal();
       },
       (error) => {
         console.error('Error al agregar foto al local:', error);
@@ -37,15 +43,27 @@ export class FotosComponent {
     );
   }
 
-  agregarFotoEvent(eventId: number, localId: number, rutaImagen: string) {
-    this.authService.agregarFotoEvent(eventId, localId, rutaImagen).subscribe(
+  agregarFotoEvent() {
+    this.authService.agregarFotoEvent(this.eventIdEventoForm, this.localIdEventoForm, this.rutaImagenEventoForm).subscribe(
       (response) => {
         console.log('Imagen agregada exitosamente:', response);
+        this.resetFormEvento();
       },
       (error) => {
         console.error('Error al agregar imagen:', error);
       }
     );
   }
-}
 
+  resetFormLocal() {
+    this.localIdLocalForm = 0;
+    this.rutaImagenLocalForm = '';
+  }
+
+  resetFormEvento() {
+    this.localIdEventoForm = 0;
+    this.eventIdEventoForm = 0;
+    this.rutaImagenEventoForm = '';
+  }
+
+}

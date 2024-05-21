@@ -1,33 +1,31 @@
-<!-- fotos.component.html -->
-
 <div class="container-fuild text-start">
   <h2>Agregar Foto a Local</h2>
   <form (ngSubmit)="agregarFoto()" #fotoForm="ngForm">
     <div class="row">
       <div class="col-lg-5">
         <div class="form-group">
-          <label for="localId">ID del Local:</label>
+          <label for="localIdLocalForm">ID del Local:</label>
           <br />
           <input
             type="number"
             class="form-control"
-            id="localId"
-            name="localId"
-            [(ngModel)]="localId"
+            id="localIdLocalForm"
+            name="localIdLocalForm"
+            [(ngModel)]="localIdLocalForm"
             required
           />
         </div>
       </div>
       <div class="col-lg-4">
         <div class="form-group">
-          <label for="rutaImagen">URL de la Imagen:</label>
+          <label for="rutaImagenLocalForm">URL de la Imagen:</label>
           <br />
           <input
             type="text"
             class="form-control"
-            id="rutaImagen"
-            name="rutaImagen"
-            [(ngModel)]="rutaImagen"
+            id="rutaImagenLocalForm"
+            name="rutaImagenLocalForm"
+            [(ngModel)]="rutaImagenLocalForm"
             required
           />
         </div>
@@ -45,67 +43,65 @@
       </div>
     </div>
   </form>
-  <div>
-  </div>
+</div>
 
-  <div class="container-fluid text-start">
-    <h2>Agregar Foto a Evento</h2>
-    <form
-      (ngSubmit)="agregarFotoEvent(localId, eventId, rutaImagen)"
-      #fotoForm="ngForm"
-    >
-      <div class="row">
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label for="localId">ID del Local:</label>
-            <input
-              type="number"
-              class="form-control"
-              id="localId"
-              name="localId"
-              [(ngModel)]="localId"
-              required
-            />
-          </div>
+<div class="container-fluid text-start">
+  <h2>Agregar Foto a Evento</h2>
+  <form
+    (ngSubmit)="agregarFotoEvent()"
+    #fotoFormEvento="ngForm"
+  >
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label for="localIdEventoForm">ID del Local:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="localIdEventoForm"
+            name="localIdEventoForm"
+            [(ngModel)]="localIdEventoForm"
+            required
+          />
         </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label for="eventId">ID del Evento:</label>
-            <input
-              type="number"
-              class="form-control"
-              id="eventId"
-              name="eventId"
-              [(ngModel)]="eventId"
-              required
-            />
-          </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label for="eventIdEventoForm">ID del Evento:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="eventIdEventoForm"
+            name="eventIdEventoForm"
+            [(ngModel)]="eventIdEventoForm"
+            required
+          />
         </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label for="rutaImagen">URL de la Imagen:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="rutaImagen"
-              name="rutaImagen"
-              [(ngModel)]="rutaImagen"
-              required
-            />
-          </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <label for="rutaImagenEventoForm">URL de la Imagen:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="rutaImagenEventoForm"
+            name="rutaImagenEventoForm"
+            [(ngModel)]="rutaImagenEventoForm"
+            required
+          />
         </div>
-        <div class="col">
-          <div class="d-grid gap-2 col-6 mx-auto">
-            <button
+      </div>
+      <div class="col">
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button
             type="submit"
-            class="btn btn-primary  mt-3 py-3" style="margin-left: 10px;"
-            [disabled]="!fotoForm.valid"
+            class="btn btn-primary mt-3 py-3"
+            [disabled]="!fotoFormEvento.valid"
           >
             Agregar Foto Evento
           </button>
-          </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>

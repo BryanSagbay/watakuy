@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Propietarios } from '../model/Propietarios';
@@ -288,17 +288,27 @@ export class AuthService {
 
 //Metodo para agregar una imagen a un evento
 agregarFotoEvent(eventId: number, localId: number, rutaImagen: string): Observable<any> {
-  const url = `${this.apiUrl}/image/${eventId}/${localId}`;
-  const data = { ruta_imagen: rutaImagen };
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Token not found in local storage');
+    return throwError('Token not found in local storage');
+  }
 
-  return this.http.post(url, data).pipe(
-    catchError((error) => {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
+
+  const url = `${this.apiUrl}/image/${eventId}/${localId}`;
+  const data = { ruta_imagen_evento: rutaImagen };
+
+  return this.http.post(url, data, {headers}).pipe(
+    catchError((error: HttpErrorResponse) => {
       console.error('Error adding image:', error);
       return throwError('Error adding image');
     })
   );
 }
 
-//-------------end
 }
 
