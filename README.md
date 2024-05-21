@@ -1,8 +1,8 @@
-### Pagina Web Watukuy
+## Pagina Web Watukuy
 
 Este proyecto de Angular es un panel de control que permite administrar locales y eventos, con la capacidad de consumir un API para realizar diversas operaciones. A continuación, se detallan las funcionalidades principales y la estructura del proyecto.
 
-### Funcionalidades Principales:
+## Funcionalidades Principales:
 
 1. **Autenticación:**
    - Inicio de sesión y cierre de sesión para acceder al panel de control.
@@ -29,14 +29,14 @@ Este proyecto de Angular es un panel de control que permite administrar locales 
    - Subir imágenes asociadas a locales.
    - Subir imágenes asociadas a eventos.
 
-### Tecnologías Utilizadas:
+## Tecnologías Utilizadas:
 
 - Angular
 - Bootstrap
 - Bootstrap Icons
 - SweetAlert2
 
-### Instalación y Uso:
+## Instalación y Uso:
 
 1. Clona el repositorio desde ```https://github.com/BryanSagbay/watakuy.git  ```
 2. Instala las dependencias ejecutando `npm install`.
@@ -53,13 +53,10 @@ La estructura del proyecto sigue la convención de Angular y se compone de compo
 
 A continuación, se muestran algunas capturas de pantalla de la interfaz del panel de control:
 
-[Captura de Pantalla 1](enlace_a_la_captura_1)
+![image](https://github.com/BryanSagbay/watakuy/assets/85771422/05373a6e-0443-49a6-917f-5869af4432d7)
 
-[Captura de Pantalla 2](enlace_a_la_captura_2)
 
-[Captura de Pantalla 3](enlace_a_la_captura_3)
-
-### Contribución:
+## Contribución:
 
 Si deseas contribuir al desarrollo de este proyecto, por favor, sigue las pautas de contribución del repositorio.
 
