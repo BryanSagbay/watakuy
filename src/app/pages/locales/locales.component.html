@@ -185,91 +185,92 @@
           role="tabpanel"
           aria-labelledby="overview"
         >
-          <div class="row">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>NOMBRE</th>
-                    <th>DIRRECCION</th>
-                    <th>TELEFONO</th>
-                    <th>CATEGORIA</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="local">
-                    <td>{{ local.id }}</td>
-                    <td>{{ local.nombre }}</td>
-                    <td>{{ local.direccion }}</td>
-                    <td>{{ local.telefono }}</td>
-                    <td>{{ local.categoria }}</td>
-                    <td>
-                      <button
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>NOMBRE</th>
+                  <th>DIRECCIÓN</th>
+                  <th>TELÉFONO</th>
+                  <th>CATEGORÍA</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let local of locales">
+                  <td>{{ local.id }}</td>
+                  <td>{{ local.nombre }}</td>
+                  <td>{{ local.direccion }}</td>
+                  <td>{{ local.telefono }}</td>
+                  <td>{{ local.categoria }}</td>
+                  <td>
+                    <button
                       (click)="openEditModal(local)"
-                        class="btn btn-warning"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editar"
-                      >
-                        <i class="bi bi-pencil-square fs-0"></i>
-                      </button>
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-danger"
-                        (click)="deleteLocal(local.id)"
-                      >
-                        <i class="bi bi-trash-fill"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                      class="btn btn-warning"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editar"
+                    >
+                      <i class="bi bi-pencil-square fs-0"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-danger"
+                      (click)="deleteLocal(local.id)"
+                    >
+                      <i class="bi bi-trash-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-            <div *ngIf="!local">
-              <div class="alert alert-danger" role="alert">
-                No se encontro locales a su nombre
-                <p>Agregue locales</p>
-              </div>
+          <div *ngIf="locales.length === 0">
+            <div class="alert alert-danger" role="alert">
+              No se encontraron locales asociados a su nombre. Por favor, agregue locales.
             </div>
-            <!-- Modal Editar-->
-            <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editar" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Local</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form [formGroup]="localForm">
-                      <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" formControlName="nombre" id="nombre" class="form-control">
-                      </div>
-                      <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección:</label>
-                        <input type="text" formControlName="direccion" id="direccion" class="form-control">
-                      </div>
-                      <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono:</label>
-                        <input type="text" formControlName="telefono" id="telefono" class="form-control">
-                      </div>
-                      <div class="mb-3">
-                        <label for="categoria" class="form-label">Categoría:</label>
-                        <input type="text" formControlName="categoria" id="categoria" class="form-control">
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="guardarCambios()">Guardar cambios</button>
-                  </div>
+          </div>
+
+          <!-- Modal Editar-->
+          <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editar" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Local</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="localForm">
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Nombre:</label>
+                      <input type="text" formControlName="nombre" id="nombre" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                      <label for="direccion" class="form-label">Dirección:</label>
+                      <input type="text" formControlName="direccion" id="direccion" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                      <label for="telefono" class="form-label">Teléfono:</label>
+                      <input type="text" formControlName="telefono" id="telefono" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                      <label for="categoria" class="form-label">Categoría:</label>
+                      <input type="text" formControlName="categoria" id="categoria" class="form-control">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" (click)="guardarCambios()">Guardar cambios</button>
                 </div>
               </div>
             </div>
-          </div>
+
+        </div>
+
         </div>
       </div>
     </div>

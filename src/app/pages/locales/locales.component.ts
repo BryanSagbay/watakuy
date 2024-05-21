@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-locales',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './locales.component.html',
   styleUrl: './locales.component.css',
 })
@@ -23,11 +23,11 @@ export class LocalesComponent implements OnInit {
   localForm!: FormGroup;
   local: Locales | undefined;
   selectedLocal: Locales | null = null;
+  locales: Locales[] = [];
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +47,6 @@ export class LocalesComponent implements OnInit {
     if (this.localForm.invalid) {
       return;
     }
-
     this.authService.addLocal(this.localForm.value).subscribe(
       (response: Locales) => {
         console.log('Local agregado correctamente:', response);
@@ -73,11 +72,16 @@ export class LocalesComponent implements OnInit {
     );
   }
 
-  // Método para obtener los detalles del local
   getLocalDetails(): void {
-    this.authService.getLocalDetails().subscribe(
+    const duenoLocalId = this.authService.getUserId();
+    if (!duenoLocalId) {
+      console.error('No se pudo obtener el ID del usuario del local storage.');
+      return;
+    }
+
+    this.authService.getLocalDetails(duenoLocalId).subscribe(
       (data) => {
-        this.local = data;
+        this.locales = data;
       },
       (error) => {
         console.error('Error al obtener los detalles del local:', error);
