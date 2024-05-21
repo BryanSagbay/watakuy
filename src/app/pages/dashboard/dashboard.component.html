@@ -99,9 +99,12 @@
             </li>
 
             <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-
-
-              <a (click)="logout()" class="nav-link mt-1" href="" aria-expanded="false">
+              <a
+                (click)="confirmLogout($event)"
+                class="nav-link mt-1"
+                href=""
+                aria-expanded="false"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -131,7 +134,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link "  [routerLink]="['/inicio/locales']" >
+              <a class="nav-link" [routerLink]="['/inicio/locales']">
                 <i class="mdi mdi-home menu-icon"></i>
                 <span class="menu-title">Locales</span>
               </a>
@@ -139,7 +142,7 @@
             <li class="nav-item nav-category">Elementos</li>
 
             <li class="nav-item">
-              <a class="nav-link"  [routerLink]="['/inicio/eventos']">
+              <a class="nav-link" [routerLink]="['/inicio/eventos']">
                 <i class="menu-icon mdi mdi-calendar"></i>
                 <span class="menu-title">Eventos</span>
               </a>
@@ -162,12 +165,10 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <router-outlet></router-outlet>
-            </div>
+          </div>
         </div>
-
       </div>
-        <!-- content-wrapper ends -->
+      <!-- content-wrapper ends -->
     </div>
-
   </body>
 </html>
