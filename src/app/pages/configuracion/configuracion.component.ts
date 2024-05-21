@@ -3,18 +3,22 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../service/auth.service';
 import { data } from 'jquery';
 import { Propietarios } from '../../model/Propietarios';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-configuracion',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule,ReactiveFormsModule,RouterModule],
   templateUrl: './configuracion.component.html',
   styleUrl: './configuracion.component.css'
 })
 export class ConfiguracionComponent{
+duenoLocal: any;
+userId: number | null = null; // Inicializar userId como null
 
-  constructor(private authService: AuthService) { }
+constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     // Obtener el ID del usuario del local storage
@@ -36,5 +40,6 @@ export class ConfiguracionComponent{
         );
     }
   }
+
 
 }

@@ -328,30 +328,31 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/userlogin/${id}`);
   }
 
-  // Método para actualizar los datos del dueño del local
-  updateOwnerData(ownerData: any): Observable<any> {
-    const userId = this.getUserId(); // Obtenemos el ID del usuario actual del local storage
-    if (!userId) {
-      console.error('No se pudo obtener el ID del usuario');
-      return throwError('Error al obtener el ID del usuario');
-    }
 
-    return this.http
-      .put<any>(`${this.apiUrl}/duenos/${userId}`, ownerData)
-      .pipe(
-        tap((res) => {
-          // Actualizamos los datos del usuario en el local storage si la solicitud es exitosa
-          localStorage.setItem('user', JSON.stringify(res.updatedUserData));
-        }),
-        catchError((error) => {
-          console.error(
-            'Error al actualizar los datos del dueño del local:',
-            error
-          );
-          return throwError(
-            'Error al actualizar los datos del dueño del local'
-          );
-        })
-      );
-  }
+  // Método para actualizar los datos del dueño del local
+  // updateOwnerData(ownerData: any): Observable<any> {
+  //   const userId = this.getUserId(); // Obtenemos el ID del usuario actual del local storage
+  //   if (!userId) {
+  //     console.error('No se pudo obtener el ID del usuario');
+  //     return throwError('Error al obtener el ID del usuario');
+  //   }
+
+  //   return this.http
+  //     .put<any>(`${this.apiUrl}/duenos/${userId}`, ownerData)
+  //     .pipe(
+  //       tap((res) => {
+  //         // Actualizamos los datos del usuario en el local storage si la solicitud es exitosa
+  //         localStorage.setItem('user', JSON.stringify(res.updatedUserData));
+  //       }),
+  //       catchError((error) => {
+  //         console.error(
+  //           'Error al actualizar los datos del dueño del local:',
+  //           error
+  //         );
+  //         return throwError(
+  //           'Error al actualizar los datos del dueño del local'
+  //         );
+  //       })
+  //     );
+  // }
 }
