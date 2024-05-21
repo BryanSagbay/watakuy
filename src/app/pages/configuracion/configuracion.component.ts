@@ -1,10 +1,9 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
-import { data } from 'jquery';
-import { Propietarios } from '../../model/Propietarios';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -55,17 +54,25 @@ export class ConfiguracionComponent implements OnInit {
       this.authService.updateUser(this.userId, this.updateUserForm.value)
         .subscribe(
           (data) => {
-            console.log('Datos actualizados correctamente:', data);
-            // Aquí puedes realizar acciones adicionales después de actualizar los datos, como mostrar un mensaje de éxito o redirigir a otra página.
+            Swal.fire({
+              title: '¡Datos actualizados!',
+              text: 'Los datos del usuario se actualizaron exitosamente.',
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            });
+            // Puedes realizar acciones adicionales aquí después de actualizar los datos.
           },
           (error) => {
-            console.error('Error al actualizar los datos:', error);
-            // Aquí puedes manejar el error de acuerdo a tus necesidades, como mostrar un mensaje de error al usuario.
+            Swal.fire({
+              title: '¡Error!',
+              text: 'Hubo un error al actualizar los datos. Por favor, inténtelo de nuevo más tarde.',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            });
           }
         );
     } else {
       console.error('El ID de usuario es nulo');
-      // Aquí puedes manejar el caso en el que el ID de usuario sea nulo, como mostrar un mensaje de error al usuario o redirigir a otra página.
     }
   }
 }
