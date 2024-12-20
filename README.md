@@ -59,8 +59,3 @@ A continuación, se muestran algunas capturas de pantalla de la interfaz del pan
 
 </div>
 
-## Contribución:
-
-Si deseas contribuir al desarrollo de este proyecto, por favor, sigue las pautas de contribución del repositorio.
-
-¡Gracias por tu interés en nuestro panel de control! Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con nosotros.
