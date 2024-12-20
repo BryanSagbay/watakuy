@@ -63,8 +63,4 @@ A continuación, se muestran algunas capturas de pantalla de la interfaz del pan
 
 Si deseas contribuir al desarrollo de este proyecto, por favor, sigue las pautas de contribución del repositorio.
 
-### Autor:
-
-Este proyecto fue desarrollado por [Nombre del Autor]. Para más información, puedes contactarme en [correo electrónico](correo@ejemplo.com).
-
 ¡Gracias por tu interés en nuestro panel de control! Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con nosotros.
